@@ -12,3 +12,5 @@ libraryDependencies += "org.apache.spark" %% "spark-core" % sparkVersion % "comp
 libraryDependencies += "org.apache.spark" %% "spark-sql" % sparkVersion % "compile"
 libraryDependencies += "org.apache.spark" %% "spark-hive" % sparkVersion % "compile"
 libraryDependencies += "org.apache.spark" %% "spark-streaming" % sparkVersion % "compile"
+libraryDependencies += "org.apache.spark" %% "spark-mllib" % sparkVersion % "compile"
+
