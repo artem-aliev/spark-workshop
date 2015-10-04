@@ -2,7 +2,7 @@ package edu.workshop
 
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.sql.types._
-import org.apache.spark.{SparkContext, SparkConf}
+import org.apache.spark.{SparkConf, SparkContext}
 
 
 object ScalaSparkSQL {
@@ -24,7 +24,7 @@ object ScalaSparkSQL {
       dfS.groupBy("species").avg("petal_w").show
 
     dfS.registerTempTable("species")
-    sqlContext.sql("select * from species").show
-
+    import sqlContext._
+    sql("select species, avg(sepal_l) from iris group by species").show
   }
 }

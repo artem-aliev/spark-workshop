@@ -1,6 +1,6 @@
 package edu.workshop
 
-import org.apache.spark.mllib.classification.NaiveBayes
+import org.apache.spark.mllib.classification.{NaiveBayesModel, NaiveBayes}
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.sql.types.{DoubleType, StringType, StructField, StructType}
@@ -28,7 +28,9 @@ class ScalaMLlib {
     val predictionAndLabel = test.map(p => (model.predict(p.features), p.label))
     val accuracy = 1.0 * predictionAndLabel.filter(x => x._1 == x._2).count() / test.count()
 
-
+    // Save and load model
+    model.save(sc, "myModelPath")
+    val sameModel = NaiveBayesModel.load(sc, "myModelPath")
   }
 
   def loadIris(file: String, sql: SQLContext): DataFrame = {

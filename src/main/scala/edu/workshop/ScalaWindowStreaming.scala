@@ -4,7 +4,7 @@ import org.apache.spark.SparkConf
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 
-object ScalaSparkStreaming {
+object ScalaWindowStreaming {
   val checkpoint = "streaming_checkpoint"
   val dataDirectory = "tmp_data"
 
@@ -33,16 +33,21 @@ object ScalaSparkStreaming {
     val keysRDD= ssc.sparkContext.parallelize(keys).cache
     val wordCountStream = stream.flatMap(_ split " " ).map((_, 1)).reduceByKey(_ + _)
 
-    val joinStream = wordCountStream.transform(rdd => rdd.join(keysRDD))
+    val joinStream = wordCountStream.transform(rdd => rdd.join(keysRDD)
+      .map{case (key,(count, id)) => (key,count)})
+
+
+    val win = joinStream.window(Seconds(30), Seconds(10))
+
+    def updateFunction(newValues: Seq[Int], runningCount: Option[Int]): Option[Int] = {
+      val newCount: Int = runningCount.getOrElse(0) + newValues.sum
+      Some(newCount)
+    }
+    val total = joinStream.updateStateByKey(updateFunction _)
 
     // debug info, first 10 events
-    joinStream.print()
+    win.join(total).print()
 
-    // store data in files
-    //stream.saveAsTextFiles("stream/s-")
-    //joinStream.foreachRDD((rdd, time) =>
-    //  rdd.saveAsTextFile("stream1/s-" + time.milliseconds)
-    //)
     ssc
   }
 }
