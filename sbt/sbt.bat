@@ -39,7 +39,7 @@ if "%_JAVA_OPTS%"=="" set _JAVA_OPTS=%CFG_OPTS%
 
 :run
 
-"%_JAVACMD%" %_JAVA_OPTS% %SBT_OPTS% -cp "%SBT_HOME%sbt-launch.jar" xsbt.boot.Boot %*
+"%_JAVACMD%" %_JAVA_OPTS% %SBT_OPTS% -cp "%SBT_HOME%sbt-launch-0.13.8.jar" xsbt.boot.Boot %*
 if ERRORLEVEL 1 goto error
 goto end
 
