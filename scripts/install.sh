@@ -2,7 +2,7 @@
 
 http://spark.apache.org/downloads.html
 
-unzip spark-1.6.2-bin-hadoop2.6.tgz
+tar xzvf spark-1.6.2-bin-hadoop2.6.tgz
 mv spark-1.6.2-bin-hadoop2.6 spark
 
 cd spark
@@ -48,7 +48,7 @@ scala> keysRDD.join(wordCounts).collect.foreach(println)
 
 CREATE  TABLE iris (sepal_l double,sepal_w double,petal_l double,petal_w double, species string)
 USING com.databricks.spark.csv
-OPTIONS (path "iris.csv", header "true");
+OPTIONS (path "data/iris.csv", header "true");
 
 select species, avg(sepal_l) from iris group by species;
 
