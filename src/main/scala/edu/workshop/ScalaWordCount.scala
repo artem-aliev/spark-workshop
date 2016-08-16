@@ -5,7 +5,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 object ScalaWordCount {
   def main(args: Array[String]) {
 
-     val conf = new SparkConf().setAppName("Simple Spark Application")
+     val conf = new SparkConf().setAppName("Simple Spark Application").setMaster("local")
      val sc = new SparkContext(conf)
      val textFile = sc.textFile("README.md")
      val wordCounts = textFile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey((a, b) => a + b)

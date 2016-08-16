@@ -42,9 +42,9 @@ scala> keysRDD.join(wordCounts).collect.foreach(println)
 ./sbin/start-master.sh -h localhost
 ./sbin/start-slave.sh  spark://localhost:7077
 
-./bin/spark-shell --packages com.databricks:spark-csv_2.10:1.2.0
+./bin/spark-shell --packages com.databricks:spark-csv_2.10:1.4.0
 
-./bin/spark-sql --packages com.databricks:spark-csv_2.10:1.2.0 --hiveconf hive.metastore.warehouse.dir=file:/Users/artemaliev/git/workshop;
+./bin/spark-sql --packages com.databricks:spark-csv_2.10:1.4.0 --hiveconf hive.metastore.warehouse.dir=file:/Users/artemaliev/git/workshop;
 
 CREATE  TABLE iris (sepal_l double,sepal_w double,petal_l double,petal_w double, species string)
 USING com.databricks.spark.csv

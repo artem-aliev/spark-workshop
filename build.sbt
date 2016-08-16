@@ -2,7 +2,7 @@ name := "workshop"
 
 version := "1.0"
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.10.6"
 
 val sparkVersion = "1.6.2"
 
@@ -13,4 +13,5 @@ libraryDependencies += "org.apache.spark" %% "spark-sql" % sparkVersion % "compi
 libraryDependencies += "org.apache.spark" %% "spark-hive" % sparkVersion % "compile"
 libraryDependencies += "org.apache.spark" %% "spark-streaming" % sparkVersion % "compile"
 libraryDependencies += "org.apache.spark" %% "spark-mllib" % sparkVersion % "compile"
+libraryDependencies += "com.databricks" %% "spark-csv" % "1.4.0"  % "compile"
 
