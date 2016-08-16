@@ -4,7 +4,7 @@ version := "1.0"
 
 scalaVersion := "2.10.4"
 
-val sparkVersion = "1.5.0"
+val sparkVersion = "1.6.2"
 
 mainClass in (Compile, packageBin) := Some("edu.workshop.ScalaWordCount")
 

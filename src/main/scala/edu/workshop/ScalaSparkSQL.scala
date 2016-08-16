@@ -12,7 +12,7 @@ object ScalaSparkSQL {
     val sc = new SparkContext(conf)
     val sqlContext = new SQLContext(sc)
     val df = sqlContext.read.format("com.databricks.spark.csv")
-      .option("header", "true").load("iris.csv")
+      .option("header", "true").option("inferSchema", "true")load("iris.csv")
     df.show
     val irisSchema = StructType(Array(
       StructField("sepal_l",DoubleType,false),

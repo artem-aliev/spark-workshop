@@ -1,12 +1,29 @@
 #!/usr/bin/env bash
-unzip spark-1.5.0-bin-hadoop2.6.zip
-mv spark-1.5.0-bin-hadoop2.6 spark
+
+http://spark.apache.org/downloads.html
+
+unzip spark-1.6.2-bin-hadoop2.6.tgz
+mv spark-1.6.2-bin-hadoop2.6 spark
+
 cd spark
 mv conf/log4j.properties.template conf/log4j.properties
 #set log4j.rootCategory=ERROR, console
 mv conf/spark-defaults.conf.template conf/spark-defaults.conf
 
 ./bin/spark-shell
+
+# first example
+scala> val textFile = sc.textFile("README.md")
+scala> textFile.count
+scala> val wordCounts = textFile.flatMap(line => line.split(" ")).map(word => (word,1)).reduceByKey((a, b) => a+b)
+scala> wordCounts.takeSample(true,3).foreach(println)
+
+# join example
+
+scala> val keys = Seq(("Spark",1), ("Hadoop",2), ("Streaming",3))
+scala> val keysRDD= sc.parallelize(keys)
+scala> keysRDD.join(wordCounts).collect.foreach(println)
+
 
 ./bin/spark-submit --class org.apache.spark.examples.SparkPi \
     --master yarn-cluster \
@@ -29,9 +46,9 @@ mv conf/spark-defaults.conf.template conf/spark-defaults.conf
 
 ./bin/spark-sql --packages com.databricks:spark-csv_2.10:1.2.0 --hiveconf hive.metastore.warehouse.dir=file:/Users/artemaliev/git/workshop;
 
-CREATE TABLE iris (sepal_l double,sepal_w double,petal_l double,petal_w double, species string)
+CREATE  TABLE iris (sepal_l double,sepal_w double,petal_l double,petal_w double, species string)
 USING com.databricks.spark.csv
-OPTIONS (path "iris.csv", header "true")
+OPTIONS (path "iris.csv", header "true");
 
 select species, avg(sepal_l) from iris group by species;
 

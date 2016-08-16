@@ -39,10 +39,10 @@ object ScalaSparkStreaming {
     joinStream.print()
 
     // store data in files
-    //stream.saveAsTextFiles("stream/s-")
-    //joinStream.foreachRDD((rdd, time) =>
-    //  rdd.saveAsTextFile("stream1/s-" + time.milliseconds)
-    //)
+    stream.repartition(1).saveAsTextFiles("stream/s-")
+    joinStream.foreachRDD((rdd, time) =>
+      if (!rdd.isEmpty())rdd.saveAsTextFile("stream1/s-" + time.milliseconds)
+    )
     ssc
   }
 }
