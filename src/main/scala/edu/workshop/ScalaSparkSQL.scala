@@ -24,7 +24,7 @@ object ScalaSparkSQL {
       dfS.groupBy("species").avg("petal_w").show
 
     dfS.registerTempTable("species")
-    //sql("select species, avg(sepal_l) from iris group by species").show
+    sqlContext.sql("select species, avg(sepal_l) from species group by species").show
     sc.stop()
   }
 }
